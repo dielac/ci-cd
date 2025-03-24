@@ -1,0 +1,166 @@
+
+* {
+
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+
+  background-color: #f0f0f5;    
+  
+  min-height: 110vh;    
+  position: relative;   
+  padding-bottom: 55px;    
+}
+
+
+header {
+  background-color: #a18dca;    
+  color: white;    
+  padding: 25px 0;    
+  text-align: center;    /* Centered  */
+  position: fixed;    /* forced header at the top*/
+  top: 0;    /* keeps at the top*/
+  width: 100%;    /* keeps it across the screen too i was having problems with that too  */
+  z-index: 1100;   /*keeps the header at the top i was having problems with that*/
+}
+
+
+header h1, header p {
+  margin: 7px;   
+  font-size: 1.7rem;    
+}
+
+/* makes navbar go across the entire screen*/
+.navbar {
+  background-color: #a18dca;    
+  position: fixed;    /* forced at top */
+  top: 0;    
+  width: 100%;    
+  margin-top: 62px;    
+  z-index: 1100;    
+  display: flex;    /* perosnally wanted this allignmentt*/
+  justify-content: flex-end;    /* wanted the containers to be on the end */
+  align-items: center;    
+  padding: 13px;    
+
+
+}
+
+
+.navbar-collapse {
+  display: flex;
+  justify-content: flex-end;    
+
+  align-items: center;    
+
+}
+
+
+.navbar-brand, .nav-link {
+  color: #a18dca !important;    /*made this important to make sure the app goes w/ this one */
+  font-weight: bold;   
+
+  padding: 10px 23px;    
+  margin: 0 5px;    
+  background-color: #f8f4f5;    
+ 
+}
+
+
+.navbar-brand:hover, .nav-link:hover {
+  color: #800296 !important;    
+
+  background-color: #f0aee1;    
+}
+
+
+.nav-item {
+  display: inline-flex;   
+  align-items: center;   
+  justify-content: center;   
+}
+
+
+.container {
+  margin: 110px auto 20px;  
+  max-width: 1200px;    
+}
+
+
+.card {
+  margin-bottom: 20px;    
+
+ 
+  background-color: #e6e6fa;   
+  border-radius: 10px;   
+}
+
+
+
+
+.card-img-top {
+  height: 300px;    
+  object-fit: cover;    
+
+}
+
+
+.card-title {
+  font-weight: bold;    
+
+  font-size: 1.5rem;   
+  color: #333;    
+}
+
+
+button, .btn {
+  margin: 5px;  
+  background-color: #a18dca;  
+  color: white;    
+  
+}
+
+
+button:hover, .btn:hover {
+  background-color: #5f1f65;    
+}
+
+
+.footer {
+  background-color: #a18dca;   
+  color: white;   
+  text-align: center;   
+  padding: 17px 0;    
+  position: fixed;    /* Fixed at the bottom */
+  bottom: 0;    
+  width: 105%;    /* forcig header to stay across the page */
+}
+
+
+.form-container {
+  display: flex;
+  justify-content: center;  
+  align-items: center;  
+
+}
+
+
+.form-group label {
+  font-weight: bold;    
+  margin-bottom: 5px;    
+
+}
+
+input, textarea {
+  margin-bottom: 10px;   
+  padding: 10px;   
+
+  width: 100%;  
+  border-radius: 5px;   
+  border: 1px solid #f1dcdc;    
+}
