@@ -25,8 +25,6 @@ This app does not include a backend, just **FakeStoreAPI** to manage product dat
 
 
 - **React**
-- **React Router**
-- **Axios**
 - **React Bootstrap**
 - **Bootstrap** 
 ---
