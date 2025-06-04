@@ -1,4 +1,3 @@
-// Importing again - we have to do this on every page
 import React, { useState, useEffect } from 'react'    
 import Container from "react-bootstrap/Container"    
 import Card from "react-bootstrap/Card"    // Bootstrap card for product display
