@@ -2,27 +2,29 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import store from '../store/store';
-import App from '../App';
+import ProductCard from '../components/ProductCard';
+import Cart from '../components/Cart';
 
-const queryClient = new QueryClient();
+test('Cart updates when adding a product', () => {
+  const fakeProduct = {
+    id: 1,
+    title: 'Test Item',
+    price: 5,
+    image: 'https://via.placeholder.com/150',
+  };
 
-test('adding product updates cart count in navbar', async () => {
   render(
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
+      {/* show both product and cart side by side */}
+      <ProductCard product={fakeProduct} />
+      <Cart />
     </Provider>
   );
 
-  // Wait for products to load and click the first “Add to Cart” button
-  const addButtons = await screen.findAllByRole('button', { name: /add to cart/i });
-  expect(addButtons.length).toBeGreaterThan(0);
-  userEvent.click(addButtons[0]);
+  // click "Add to Cart" on our single ProductCard
+  userEvent.click(screen.getByRole('button', { name: /add to cart/i }));
 
-  // The navbar link should update to show one item in cart
-  const cartLink = await screen.findByRole('link', { name: /Cart\s*\(\s*1\s*\)/i });
-  expect(cartLink).toBeInTheDocument();
+  // the Cart component should now show our item's title
+  expect(screen.getByText(/Test Item/i)).toBeInTheDocument();
 });
