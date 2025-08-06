@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -6,7 +5,7 @@ import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import App from '../App';
-import store from '../store/store'; // <-- keep your real path
+import store from '../store/store'; 
 
 // Mock axios so products/categories render quickly and consistently
 jest.mock('axios', () => ({
@@ -50,7 +49,7 @@ describe('Cart ↔ Product flow', () => {
   });
 
   function renderApp() {
-    // Do NOT add a MemoryRouter here; <App /> already provides routing.
+  
     return render(
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
@@ -73,8 +72,6 @@ describe('Cart ↔ Product flow', () => {
       if (productsLink) await user.click(productsLink);
     }
 
-    // ✅ Wait for the product list to actually render before looking for buttons
-    // (prevents timing flakiness while React Query + axios mock resolve)
     await screen.findByText(/our products!!/i);
 
     // Click the first "Add to Cart"
@@ -82,7 +79,6 @@ describe('Cart ↔ Product flow', () => {
     expect(addButtons.length).toBeGreaterThan(0);
     await user.click(addButtons[0]);
 
-    // Navbar should show non-zero count such as "Cart (1)"
     expect(screen.getByText(/Cart\s*\(\s*[1-9]\d*\s*\)/i)).toBeInTheDocument();
   });
 });

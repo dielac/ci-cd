@@ -1,120 +1,79 @@
-# FakeStore App V2
+# FakeStore App v2
 
-This is a simple and beginner-friendly e-commerce app built with React and Vite.  
-It includes product management, a shopping cart, and a full CI/CD pipeline.
-
----
-
-## Live Site
-
-You can view the app here:  
-https://vercel.com/diela-camajs-projects/ci-cd-pipeline-for-react-e-commerce-app-pw21
+This is a simple e-commerce web app built with React, Redux Toolkit, React Query, Bootstrap, and Vite. The goal was to build something that feels like a working store with products, a cart system, and a nice UI — while also practicing things like testing and CI/CD automation.
 
 ---
 
 ## Features
 
-**Product Pages:**
-- View a list of all products
-- Click on a product to see more details
-- Add a new product using a form
-- Edit an existing product
-- Delete a product with confirmation
-
-**Cart:**
-- Add items to the shopping cart
-- See total price and quantity
-- Remove items from the cart
-- Quantity updates and totals calculated
-
-**Category Filter:**
-- Filter products by category using a dropdown menu
-
-**State Management:**
-- Redux Toolkit is used for the shopping cart
-- React Query is used for API data fetching and caching
-
-**Styling:**
-- Bootstrap is used for layout and styling
-- Navbar and footer are included
-
-**Testing:**
-- Unit tests for Home and ProductCard components
-- Integration test for the cart
-- All tests use Jest and React Testing Library
-
-**CI/CD:**
-- GitHub Actions runs tests and builds the app
-- The app is deployed to Vercel automatically if tests pass
+- Browse a list of fake products
+- View product details
+- Add items to cart
+- See cart count update in header
+- View and remove items in cart
+- Fully responsive (Bootstrap)
+-  CI/CD using GitHub Actions + Vercel
+-  Unit & Integration tests using Jest and React Testing Library
 
 ---
 
 ## Tech Stack
 
-- React
-- Vite
-- Redux Toolkit
-- React Router DOM
-- React Query
-- Bootstrap
-- Axios
-- Jest
-- React Testing Library
-- GitHub Actions
-- Vercel
+- React (Vite)
+- Redux Toolkit (for global state / cart)
+- React Query (for fetching products)
+- React Router DOM (for navigation)
+- Bootstrap (for layout/UI)
+- Jest + React Testing Library (for testing)
+- GitHub Actions (CI/CD)
+- Vercel (Deployment)
 
 ---
 
-## Folder Structure
+## Getting Started
 
-fakestore-appv2/
-├── src/
-│ ├── components/
-│ │ ├── Home.jsx
-│ │ ├── ProductList.jsx
-│ │ ├── ProductDetails.jsx
-│ │ ├── AddProduct.jsx
-│ │ ├── EditProduct.jsx
-│ │ ├── Cart.jsx
-│ │ └── CartLink.jsx
-│ ├── store/
-│ │ ├── cartSlice.js
-│ │ ├── cartSelectors.js
-│ │ └── store.js
-│ ├── App.jsx
-│ ├── main.jsx
-│ └── index.css
-├── .github/workflows/
-│ └── main.yml (CI/CD pipeline)
-├── package.json
-├── vite.config.js
-└── README.md
+### 1. Clone the repo
 
-
----
-
-## How to Run This Project
-
-1. Clone this repository
-
-git clone https://github.com/dielac/CI-CD-Pipeline-for-React-E-Commerce-App
+```bash
+git clone https://github.com/your-username/fakestore-appv2.git
 cd fakestore-appv2
-
-
-2. Install all dependencies
-
+2. Install dependencies
 npm install
-
-
-3. Start the development server
-
+3. Run the app locally
 npm run dev
+Running Tests
+To run tests once:
+npm test
+To watch tests:
+npm run test:watch
+Continuous Integration & Deployment
+Every push to the main branch will trigger GitHub Actions.
 
 
-4. To run the tests
+It will:
+Install dependencies
+Run tests
+If tests pass, it deploys to Vercel
+The workflow config lives in .github/workflows/ci-cd.yml
+You’ll need to add your VERCEL_TOKEN in the GitHub repository’s Secrets for the deploy step to work.
 
-npm run test
+
+Folder Structure
+src/
+  components/       # Reusable UI components (ProductCard, Cart, etc)
+  pages/            # Route pages (Home, ProductDetails, etc)
+  context/          # Context API (if used)
+  store/            # Redux store setup
+  api/              # React Query fetch functions
+  test/             # Integration tests
+  types/            # TypeScript types (if used)
 
 
----
+Live Demo
+
+
+You can try the app live here:
+https://fakestore-appv2.vercel.app
+
+
 

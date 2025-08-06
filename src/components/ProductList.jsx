@@ -1,4 +1,3 @@
-
 import React from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -11,7 +10,7 @@ import { Container, Row, Col } from "react-bootstrap";
 const ProductList = () => {
   const dispatch = useDispatch();
 
-  // ✅ Fetch products here so the list isn't empty in tests
+  // Fetch products here so the list isn't empty in tests
   const {
     data: products = [],
     isLoading,
@@ -44,7 +43,7 @@ const ProductList = () => {
                 <div className="card-title h5">{product.title}</div>
                 <p className="card-text">${product.price}</p>
 
-                {/* ✅ The button your test clicks */}
+                {/* The button your test clicks */}
                 <button
                   type="button"
                   className="btn btn-success me-2"
