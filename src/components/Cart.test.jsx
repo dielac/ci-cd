@@ -1,9 +1,9 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from '../store/store';
-import Cart from './Cart';
+import React from 'react'
+import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from '../store/store'
+import Cart from './Cart'
 
 test('shows empty cart message', () => {
   render(
@@ -12,7 +12,6 @@ test('shows empty cart message', () => {
         <Cart />
       </Provider>
     </MemoryRouter>
-  );
-
-  expect(screen.getByText(/your cart is empty/i)).toBeInTheDocument();
-});
+  )
+  expect(screen.getByText(/Your Cart is Empty/i)).toBeInTheDocument()
+})

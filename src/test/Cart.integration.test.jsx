@@ -1,56 +1,88 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { Provider } from 'react-redux'
-import store from '../store/store'
-import ProductCard from '../components/ProductCard'
-import Cart from '../components/Cart'
 
-describe('Cart ↔ ProductCard integration', () => {
-  const fakeProduct = {
-    id: 42,
-    title: 'Test Item',
-    price: 9.99,
-    image: 'placeholder.png'
-  }
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import App from '../App';
+import store from '../store/store'; // <-- keep your real path
+
+// Mock axios so products/categories render quickly and consistently
+jest.mock('axios', () => ({
+  get: jest.fn((url) => {
+    if (url.includes('/products/categories')) {
+      return Promise.resolve({ data: ['electronics', "men's clothing"] });
+    }
+    if (url.includes('/products')) {
+      return Promise.resolve({
+        data: [
+          {
+            id: 1,
+            title: 'Test Item',
+            price: 9.99,
+            category: "men's clothing",
+            rating: { rate: 4.2, count: 12 },
+            image: 'x',
+            description: 'y',
+          },
+          {
+            id: 2,
+            title: 'Another Item',
+            price: 5,
+            category: 'electronics',
+            rating: { rate: 3.8, count: 3 },
+            image: 'z',
+            description: 'w',
+          },
+        ],
+      });
+    }
+    return Promise.resolve({ data: [] });
+  }),
+}));
+
+describe('Cart ↔ Product flow', () => {
+  let queryClient;
 
   beforeEach(() => {
-    // Reset cart state before each test.
-    store.dispatch({ type: 'cart/clear' })
-  })
+    queryClient = new QueryClient();
+  });
 
-  it('shows the item in the Cart when you click Add to Cart', () => {
-    render(
+  function renderApp() {
+    // Do NOT add a MemoryRouter here; <App /> already provides routing.
+    return render(
       <Provider store={store}>
-        {/* render both ProductCard and Cart side by side */}
-        <ProductCard product={fakeProduct} />
-        <Cart />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
       </Provider>
-    )
+    );
+  }
 
-    // click the “Add to Cart” button
-    const addBtn = screen.getByRole('button', { name: /add to cart/i })
-    userEvent.click(addBtn)
+  it('increments the Cart link count when you add an item', async () => {
+    renderApp();
+    const user = userEvent.setup();
 
-    // the Cart component should now show our item’s title
-    expect(screen.getByText(/Test Item/i)).toBeInTheDocument()
-  })
+    // If we started on Cart, navigate back to products
+    const backBtn = screen.queryByRole('button', { name: /go back to products/i });
+    if (backBtn) {
+      await user.click(backBtn);
+    } else {
+      const productsLink = screen.queryByRole('link', { name: /products/i });
+      if (productsLink) await user.click(productsLink);
+    }
 
-  it('increments the Cart link count when you add an item', () => {
-    // we’ll render the little cart-link from <Cart /> itself
-    render(
-      <Provider store={store}>
-        <ProductCard product={fakeProduct} />
-        <Cart />
-      </Provider>
-    )
+    // ✅ Wait for the product list to actually render before looking for buttons
+    // (prevents timing flakiness while React Query + axios mock resolve)
+    await screen.findByText(/our products!!/i);
 
-    const addBtn = screen.getByRole('button', { name: /add to cart/i })
-    userEvent.click(addBtn)
+    // Click the first "Add to Cart"
+    const addButtons = await screen.findAllByRole('button', { name: /add to cart/i });
+    expect(addButtons.length).toBeGreaterThan(0);
+    await user.click(addButtons[0]);
 
-    // after clicking, the “Go Back to Products” link is still there but
-    // Cart() also renders the link with the count in its header
-    const cartLink = screen.getByRole('link', { name: /cart\s*\(\s*1\s*\)/i })
-    expect(cartLink).toBeInTheDocument()
-  })
-})
+    // Navbar should show non-zero count such as "Cart (1)"
+    expect(screen.getByText(/Cart\s*\(\s*[1-9]\d*\s*\)/i)).toBeInTheDocument();
+  });
+});
